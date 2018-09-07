@@ -2,6 +2,8 @@
 
 >  WanXiang Innova City 's Business Contract Generator
 
+![](http://palu6iv0v.bkt.clouddn.com/UC20180908_030916.png)
+
 ### 愿景
 
 > Hopes
@@ -27,12 +29,13 @@
 
 > 2. There are independent commercial arbitration institutions in Wanxiangcheng, which have the power to decide when commercial arbitration takes place.
 
-> In the case of the existence of the above two elements, a commercial contract system based on blockchain technology came into being. Due to the empowerment of the blockchain, in this new smart city, there will be no more radish chapters, fake contracts and so on. At the same time, the cost of doing evil for every citizen in tearing up a contract will increase indefinitely.
+> In the case of the existence of the above two elements, a commercial contract system based on blockchain technology came into being. Due to the empowerment of the blockchain, in this new smart city, there will be no more con man , fake contracts , commercial fraud and so on. At the same time, the cost of doing evil for every citizen in tearing up a contract will increase indefinitely.
 
 
 
 
 ### 我们使用的技术栈
+
 >Our TechStack
 
 Node.Js - Backend
@@ -41,7 +44,7 @@ LayaAir - FrontEnd
 
 wancloud.io - BlockChain Stroage
 
-![](http://palu6iv0v.bkt.clouddn.com/UC20180907_234903.png)
+Ellipse algorithm
 
 
 
