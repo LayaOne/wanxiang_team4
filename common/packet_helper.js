@@ -10,6 +10,7 @@ PacketHelper.generate_create_user = function(user_nickname,user_pubkey){
     packet.cmd = 'user_nickname';
     packet.data = {};
     packet.data.user_nickname = user_nickname;
+    packet.data.user_pubkey = user_pubkey;
     return packet;
 }
 

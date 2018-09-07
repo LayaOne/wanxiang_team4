@@ -12,8 +12,6 @@
 
 > In 2025, in the Wanxiang Innovation Energy City, every citizen benefited from the application of blockchain technology, which made the credit system of business behavior unprecedentedly guaranteed.
 
-![](http://palu6iv0v.bkt.clouddn.com/UC20180908_031039.png)
-
 
 ### 项目介绍
 
@@ -35,7 +33,6 @@
 
 
 
-
 ### 我们使用的技术栈
 
 >Our TechStack
@@ -47,6 +44,12 @@ LayaAir - FrontEnd
 wancloud.io - BlockChain Stroage
 
 Ellipse algorithm
+
+
+
+### 项目截图
+
+![](http://palu6iv0v.bkt.clouddn.com/UC20180908_030916.png)
 
 
 
