@@ -5,7 +5,7 @@ var PacketHelper = {};
  * 生成公民
  * @param {String} user_nickname 
  */
-PacketHelper.generate_create_user = function(user_nickname){
+PacketHelper.generate_create_user = function(user_nickname,user_pubkey){
     var packet = {};
     packet.cmd = 'user_nickname';
     packet.data = {};
@@ -25,7 +25,6 @@ PacketHelper.login_with_token = function(user_token){
  * 
  * @param {*} bSuc 成功与否
  * @param {*} user_token 用户token
- * @param {*} need_confirm_number 等待confirm的合约
  */
 PacketHelper.on_logined = function(bSuc, user_token){
     var packet = {};

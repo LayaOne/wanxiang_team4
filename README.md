@@ -2,7 +2,7 @@
 
 >  WanXiang Innova City 's Business Contract Generator
 
-![](http://palu6iv0v.bkt.clouddn.com/UC20180908_030916.png)
+
 
 ### 愿景
 
@@ -11,6 +11,8 @@
 2025年，在万向创新聚能城中，每一个公民得益于区块链技术的应用，使得商业行为的信用体系得到了空前的保证。
 
 > In 2025, in the Wanxiang Innovation Energy City, every citizen benefited from the application of blockchain technology, which made the credit system of business behavior unprecedentedly guaranteed.
+
+![](http://palu6iv0v.bkt.clouddn.com/UC20180908_031039.png)
 
 
 ### 项目介绍
