@@ -44,8 +44,20 @@ PacketHelper.on_logined = function(bSuc, user_token){
 }
 
 
-PacketHelper.generate_create_contract = function(user_id){
-
+/**
+ * 生成合同
+ * @param {*} contract_target_userid 合同对象
+ * @param {*} contract_title 合同题目
+ * @param {*} contract_content 合同内容
+ */
+PacketHelper.generate_create_contract = function(contract_target_userid, contract_title,contract_content){
+    var packet = {};
+    packet.cmd = 'create_contract';
+    packet.data = {};
+    packet.data.contract_target_userid = contract_target_userid;
+    packet.data.contract_title = contract_title;
+    packet.data.contract_content = contract_content;
+    return packet;
 }
 
 module.exports = PacketHelper;
