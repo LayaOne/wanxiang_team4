@@ -151,9 +151,9 @@ function CMD_QUERY_CONTRACT_LIST(packet, browser){
 			try{
 				let body = await wancloud_api.get(docs[i].contract_hash);
 				let buffer = Buffer.from(body.label.encrypted_data, "hex");
-				
-				body.label.data = await gadgets.decryptAsync(buffer, docs[i].aes);
 
+				body.label.data = await gadgets.decryptAsync(buffer, docs[i].aes);
+				
 				ret.push(body);
 			}catch(err){
 				console.log("CMD_QUERY_CONTRACT_LIST err:", err);
@@ -192,14 +192,14 @@ function CMD_CONFIRM_CONTRACT(packet, browser){
 
 			ms_contract_model.update({'contract_hash': packet.data.contract_id}, {'contract_hash': body.rawDataHash}, function(err, raw){
 				if(!!err){
-					browser.send_msg(packet_helper.confirm_result(false, null, err.toString()));
+					browser.send_msg(packet_helper.confirm_result(false, null, null, err.toString()));
 				}else{
-					browser.send_msg(packet_helper.confirm_result(true, packet.data.contract_id));
+					browser.send_msg(packet_helper.confirm_result(true, packet.data.contract_id, body.rawDataHash));
 				}
 			});
 		});
 	}catch(err){
-		browser.send_msg(packet_helper.confirm_result(false, null, err.toString()));
+		browser.send_msg(packet_helper.confirm_result(false, null, null, err.toString()));
 	}
 }
 
@@ -216,7 +216,7 @@ function CMD_FINISH_CONTRACT(packet, browser){
 	}
 	
 	//verify signature
-
+	
 	ms_contract_model.find_one({"contract_hash": packet.data.contract_id}, async function(doc){
 		if(!doc || doc.party_a != my_pubkey || doc.party_b != my_pubkey){
 			return;
