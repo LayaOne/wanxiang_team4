@@ -27,8 +27,10 @@ var MainPage = function(){
             this.my_contract_list.visible = false;
         }
         else{
-            var packet = PacketCMD.login_with_token(self_token);
-            SocketClient.send(packet);
+            if(!myDirect.islogin){
+                var packet = PacketCMD.login_with_token(self_token);
+                SocketClient.send(packet);
+            }
         }
 
         SocketClient.regist_callback('logined',function(data){

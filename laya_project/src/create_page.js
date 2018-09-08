@@ -9,6 +9,11 @@ var CreatePage = function(){
     var viewManager = require('./viewManager')
     CreatePage.prototype.initlize = function(){
 
+
+        this.return_home.on('click',null,function(){
+            viewManager.return_home();
+        })
+
         //创建合同
         this.do_create_button.on('click',null,function(){
 
