@@ -17,4 +17,14 @@ myDirector.get_pubkey = function(){
     return localStorage.getItem('user_pub');
 }
 
+myDirector.save_token = function(token){
+    localStorage.setItem('token',token);
+}
+
+myDirector.get_token = function(){
+    return localStorage.getItem('token');
+}
+
+
+
 module.exports = myDirector;

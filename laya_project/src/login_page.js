@@ -26,6 +26,8 @@ var LoginPage = function(){
 
             myDirector.getSocketClient().send(login_packet);
 
+            ViewManager.show_loading(true);
+
 
 
         })

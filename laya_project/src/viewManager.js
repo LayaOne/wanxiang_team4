@@ -3,6 +3,7 @@ var ViewManager = {};
 var MainPage = require('./main_page');
 var LoginPage = require('./login_page');
 var ContractListPage = require('./contract_list');
+var CreatePage = require('./create_page');
 
 var SocketClient = require('./socket_client');
 var myDirector = require('./myDirector');
@@ -13,6 +14,11 @@ var resArry = [
 
 
 ViewManager.current_langurage = 'ENG';
+
+ViewManager.show_create_page = function(){
+    var create_page = new CreatePage();
+    ViewManager.jump_to_view(create_page);
+}
 
 ViewManager.set_langurage = function(lan){
     ViewManager.current_langurage = lan;
@@ -31,6 +37,7 @@ ViewManager.initlize = function(){
     Laya.class(MainPage,"MainPage",mainUI);
     Laya.class(LoginPage,"LoginPage",loginUI);
     Laya.class(ContractListPage,"ContractListPage",contract_listUI);
+    Laya.class(CreatePage,"CreatePage",createUI);
     
     
 
@@ -61,7 +68,7 @@ ViewManager.localize_element = function(element){
     
     for(var i=0;  i< total_add_number; i++){
         var single_element = element.getChildAt(i);
-        console.log(single_element.name);
+        //console.log(single_element.name);
         var single_local_info = Local[ViewManager.current_langurage][single_element.name];
         if(single_local_info != undefined){
             if(single_local_info.type == 'label'){
@@ -98,7 +105,9 @@ ViewManager.jump_to_view = function(view){
 
 ViewManager.show_public_page = function(public_key){
     if(ViewManager.pub_page == undefined){
+        
         ViewManager.pub_page = new my_publicUI();
+        ViewManager.pub_page.public_label.text = public_key;
         ViewManager.pub_page.close_button.on('click',null,function(){
             ViewManager.pub_page.close();
         })
