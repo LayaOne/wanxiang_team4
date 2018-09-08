@@ -1,11 +1,18 @@
 var api = require("../logic/wancloud/api");
 var net_op = require("../utils/net_op");
 
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
-
-api.set("pengchuanshi sb", {"type": 111, "content": "test"}, function(err, res){
-	console.log(err, res.body);
-});
+(async function(){
+	try{
+		//let body = await api.set("pengchuanshi", {"type": 111, "content": "test"});
+		//console.log(body);
+		
+		let obj = await api.get("f05f78dea6e1922df7a2c8d7d9ab60b3");
+		console.log(obj);
+	}catch(err){
+		console.log(err);
+	}
+	
+})();
 
 
 /*
