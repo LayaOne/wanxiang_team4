@@ -1,2 +1,3 @@
 var p = require('../common/packet_helper');
-p.login_with_token('123');
+var packet = p.generate_create_user('彭总');
+console.log(JSON.stringify(packet));

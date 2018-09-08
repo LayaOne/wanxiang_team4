@@ -60,4 +60,19 @@ PacketHelper.generate_create_contract = function(contract_target_userid, contrac
     return packet;
 }
 
+
+/**
+ * 请求和我有关系的合约列表
+ */
+PacketHelper.query_contract_list = function(){
+    var packet = {};
+    packet.cmd = 'query_contract_list';
+    packet.data = {};
+    return packet;
+
+}
+
+
+
+
 module.exports = PacketHelper;
