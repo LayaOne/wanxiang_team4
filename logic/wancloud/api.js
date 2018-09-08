@@ -34,7 +34,7 @@ wancloud_api.prototype.set = function(raw_data, label, cb){
 	.end(cb);
 }
 
-wancloud_api.prototype.get = function(raw_data_hash, cb){
+wancloud_api.prototype.get = function(raw_data_hash){
 	/*
 	{
 		"rawData": "万向区块链",
@@ -46,7 +46,16 @@ wancloud_api.prototype.get = function(raw_data_hash, cb){
 		}
 	}
 	*/
-	request
-	.get("https://api.wancloud.io/apis/bcs/entry/" + raw_data_hash)
-	.end(cb);
+	return new Promise((resolve, reject) => {
+		request
+		.get("https://api.wancloud.io/apis/bcs/entry/" + raw_data_hash)
+		.end(function(err, res){
+			if(err || res.body.code != 200){
+				reject(err);
+				return;
+			}
+			
+			resolve(res.body);
+		});
+	});
 }
