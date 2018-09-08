@@ -5,6 +5,7 @@ var LoginPage = require('./login_page');
 var ContractListPage = require('./contract_list');
 var CreatePage = require('./create_page');
 var CreateResultPage = require('./create_result');
+var ContractDetail = require('./contract_detail');
 
 var SocketClient = require('./socket_client');
 var myDirector = require('./myDirector');
@@ -31,6 +32,12 @@ ViewManager.show_create_result = function(){
     ViewManager.jump_to_view(create_result_page);
 }
 
+ViewManager.show_detail_ui = function(contract_id){
+    var detail_ui = new ContractDetail(contract_id);
+    ViewManager.jump_to_view(detail_ui);
+    
+}
+
 ViewManager.initlize = function(){
 
     Laya.class(MainPage,"MainPage",mainUI);
@@ -38,6 +45,7 @@ ViewManager.initlize = function(){
     Laya.class(ContractListPage,"ContractListPage",contract_listUI);
     Laya.class(CreatePage,"CreatePage",createUI);
     Laya.class(CreateResultPage,"CreateResultPage",create_resultUI);
+    Laya.class(ContractDetail,"ContractDetail",contract_detailUI);
     
 
     var socket_instance = new SocketClient("ws://www.ncsip.cn:443",function(){

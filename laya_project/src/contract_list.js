@@ -102,7 +102,8 @@ var MyContract = function(){
         }
         else{
             that.my_contract_list_label.text = 'Contract List';
-        }      
+        }     
+        myDirector.save_contract(data.contract_list); 
         var contract_list = data.contract_list;
         that.render_contract_list(contract_list);
 
@@ -111,6 +112,7 @@ var MyContract = function(){
     function on_click_single_contract(){
         var contract_id = this.contract_id;
         console.log('单个合同被点击',contract_id);
+        viewManager.show_detail_ui(contract_id);
     }
     
     this.initlize();
