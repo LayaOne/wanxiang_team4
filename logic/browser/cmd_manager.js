@@ -18,10 +18,11 @@ async function CMD_USER_NICKNAME(packet, browser){
 	//user_mgr.add_one(packet.data.user_nickname, packet.data.user_pubkey, token);
 	
 	try{
-		let body = await wancloud_api.set(0, {
+		let body = await wancloud_api.set(gadgets.create_uuid(), {
 			"pubkey": data.user_pubkey,
 			"nickname": data.user_nickname,
-			"create_ts": time_op.now()
+			"create_ts": time_op.now(),
+			"reputation": 0
 		});
 		
 		ms_human_model.insert(data.user_pubkey, {
@@ -42,6 +43,11 @@ async function CMD_USER_NICKNAME(packet, browser){
 	}
 }
 
+/**
+ * Login with token
+ * @param {*} packet 
+ * @param {*} browser 
+ */
 function CMD_LOGIN_WITH_TOKEN(packet, browser){
 	let token = packet.data.user_token;
 
@@ -58,8 +64,8 @@ function CMD_LOGIN_WITH_TOKEN(packet, browser){
 			if(!!err){
 				browser.send_msg(packet_helper.on_logined(false));
 			}else{
-				browser.set_pubkey(new_token);
-				browser.send_msg(packet_helper.on_logined(true, new_token, doc["nickname"], body.rawData));
+				browser.set_pubkey(doc["pubkey"]);
+				browser.send_msg(packet_helper.on_logined(true, new_token, doc["nickname"], body.label.reputation));
 			}
 		});
 	});
@@ -67,8 +73,8 @@ function CMD_LOGIN_WITH_TOKEN(packet, browser){
 
 /**
  * 创建合同
- * @param {*} packet 
- * @param {*} browser 
+ * @param {*} packet
+ * @param {*} browser
  */
 function CMD_CREATE_CONTRACT(packet, browser){
 	let creator_pubkey = browser.get_pubkey();
@@ -90,7 +96,8 @@ function CMD_CREATE_CONTRACT(packet, browser){
 		
 		try{
 			var encrypt_data = await gadgets.encryptAsync(data.contract_content, aes);
-			let body = await wancloud_api.set(encrypt_data, {
+			let body = await wancloud_api.set(gadgets.create_uuid(), {
+				"encrypted_data": encrypt_data.toString("hex"),
 				"title": data.contract_title,
 				"party_a": creator_pubkey,
 				"party_b": data.contract_target_userid,
@@ -104,7 +111,7 @@ function CMD_CREATE_CONTRACT(packet, browser){
 			
 			ms_contract_model.insert(body.rawDataHash, {
 				party_a: creator_pubkey,
-				party_a: data.contract_target_userid,
+				party_b: data.contract_target_userid,
 				aes: aes
 			}, function(err, product, numAffected){
 				if(!!err){
@@ -139,13 +146,13 @@ function CMD_QUERY_CONTRACT_LIST(packet, browser){
 	
 	ms_contract_model.find_many({$or: [{party_a: my_pubkey}, {party_b: my_pubkey}]}, async function(docs){
 		let ret = [];
-
+		
 		for(let i = 0;i < docs.length;++i){
 			try{
 				let body = await wancloud_api.get(docs[i].contract_hash);
-				let content = await gadgets.decryptAsync(body.rawData, docs[i].aes);
-
-				body.rawData = content;
+				let buffer = Buffer.from(body.label.encrypted_data, "hex");
+				
+				body.label.data = await gadgets.decryptAsync(buffer, docs[i].aes);
 
 				ret.push(body);
 			}catch(err){
@@ -181,7 +188,7 @@ function CMD_CONFIRM_CONTRACT(packet, browser){
 			body.label.party_b_agree = true;
 			body.label.agree_ts = time_op.now();
 			
-			body = await wancloud_api.set(body.rawData, body.label);
+			body = await wancloud_api.set(gadgets.create_uuid(), body.label);
 
 			ms_contract_model.update({'contract_hash': packet.data.contract_id}, {'contract_hash': body.rawDataHash}, function(err, raw){
 				if(!!err){
@@ -237,7 +244,7 @@ function CMD_FINISH_CONTRACT(packet, browser){
 				body.label.finish_ts = time_op.now();
 			}
 
-			body = await wancloud_api.set(body.rawData, body.label);
+			body = await wancloud_api.set(gadgets.create_uuid(), body.label);
 
 			ms_contract_model.update({'contract_hash': packet.data.contract_id}, {'contract_hash': body.rawDataHash}, function(err, raw){
 				if(!!err){

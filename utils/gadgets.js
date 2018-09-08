@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const UUID = require('uuid');
 
 var gadgets = {};
 
@@ -25,6 +26,10 @@ gadgets.decryptAsync = function(encrypt_data, password) {
 			reject({ message: exception.message });
 		}
     });
+}
+
+gadgets.create_uuid = function(n){
+	return crypto.createHash('md5').update(UUID.v1()).digest('hex').substr(0, n);
 }
 
 module.exports = gadgets;
