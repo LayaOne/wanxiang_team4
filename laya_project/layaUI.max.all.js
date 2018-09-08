@@ -2,10 +2,58 @@ var CLASS$=Laya.class;
 var STATICATTR$=Laya.static;
 var View=laya.ui.View;
 var Dialog=laya.ui.Dialog;
+var LoadingUI=(function(_super){
+		function LoadingUI(){
+			
+
+			LoadingUI.__super.call(this);
+		}
+
+		CLASS$(LoadingUI,'ui.LoadingUI',_super);
+		var __proto__=LoadingUI.prototype;
+		__proto__.createChildren=function(){
+		    			View.regComponent("Text",laya.display.Text);
+
+			laya.ui.Component.prototype.createChildren.call(this);
+			this.createView(LoadingUI.uiView);
+
+		}
+
+		LoadingUI.uiView={"type":"Dialog","props":{"width":640,"height":1136},"child":[{"type":"Rect","props":{"y":0,"x":0,"width":640,"lineWidth":1,"height":1136,"fillColor":"#626262"}},{"type":"Text","props":{"y":532,"x":0,"width":640,"text":"Loading..","height":66,"fontSize":50,"font":"Microsoft YaHei","color":"#9bee09","align":"center"}}]};
+		return LoadingUI;
+	})(Dialog);
+var contract_detailUI=(function(_super){
+		function contract_detailUI(){
+			
+		    this.contract_title=null;
+		    this.contract_creator_label=null;
+		    this.contract_target_label=null;
+		    this.contract_creator_fill=null;
+		    this.contract_target_fill=null;
+		    this.contract_content_label=null;
+
+			contract_detailUI.__super.call(this);
+		}
+
+		CLASS$(contract_detailUI,'ui.contract_detailUI',_super);
+		var __proto__=contract_detailUI.prototype;
+		__proto__.createChildren=function(){
+		    			View.regComponent("Text",laya.display.Text);
+
+			laya.ui.Component.prototype.createChildren.call(this);
+			this.createView(contract_detailUI.uiView);
+
+		}
+
+		contract_detailUI.uiView={"type":"View","props":{"width":640,"name":"contract_detail","height":1136},"child":[{"type":"Rect","props":{"y":0,"x":0,"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}},{"type":"Text","props":{"y":60,"x":3,"width":640,"var":"contract_title","text":"Loading...","name":"contract_title","height":93,"fontSize":40,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":221,"x":-150,"width":511,"var":"contract_creator_label","text":"合同创建者","name":"contract_creator_label","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":379,"x":-150,"width":511,"var":"contract_target_label","text":"合同签署人","name":"contract_target_label","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":291,"x":0,"width":640,"var":"contract_creator_fill","text":"Loading..","name":"contract_creator_fill","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":431,"x":2,"width":640,"var":"contract_target_fill","text":"Loading..","name":"contract_target_fill","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":533,"x":-157,"width":511,"var":"contract_content_label","text":"合同详情","name":"contract_content_label","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":629,"x":38,"wordWrap":true,"width":541,"text":"Loading...","overflow":"scroll","height":373,"fontSize":30,"font":"Microsoft YaHei","align":"left"}}]};
+		return contract_detailUI;
+	})(View);
 var contract_listUI=(function(_super){
 		function contract_listUI(){
 			
-		    this.my_contract_list=null;
+		    this.my_contract_list_label=null;
+		    this.return_home_button=null;
+		    this.contract_container=null;
 
 			contract_listUI.__super.call(this);
 		}
@@ -20,7 +68,7 @@ var contract_listUI=(function(_super){
 
 		}
 
-		contract_listUI.uiView={"type":"View","props":{"width":640,"height":1136},"child":[{"type":"Sprite","props":{"y":0,"x":0,"width":640,"height":1136},"child":[{"type":"Rect","props":{"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}}]},{"type":"Text","props":{"y":137,"x":0,"width":640,"var":"my_contract_list","text":"我的合同列表","name":"my_contract_list","height":57,"fontSize":40,"color":"#ffffff","align":"center"}}]};
+		contract_listUI.uiView={"type":"View","props":{"width":640,"height":1136},"child":[{"type":"Sprite","props":{"y":0,"x":0,"width":640,"height":1136},"child":[{"type":"Rect","props":{"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}}]},{"type":"Text","props":{"y":33,"x":-4,"width":640,"var":"my_contract_list_label","text":"我的合同列表","name":"my_contract_list_label","height":57,"fontSize":40,"color":"#f8f8f8","align":"center"}},{"type":"Button","props":{"y":948,"x":122,"width":391,"visible":true,"var":"return_home_button","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"return_home_button","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"Home","height":99}},{"type":"Sprite","props":{"y":129,"x":85,"width":456,"var":"contract_container","name":"contract_container","height":780}}]};
 		return contract_listUI;
 	})(View);
 var createUI=(function(_super){
@@ -145,6 +193,6 @@ var my_publicUI=(function(_super){
 
 		}
 
-		my_publicUI.uiView={"type":"Dialog","props":{"width":640,"popupCenter":true,"height":1136},"child":[{"type":"Rect","props":{"y":0,"x":0,"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}},{"type":"Text","props":{"y":181,"x":3,"width":640,"text":"您的公钥","height":93,"fontSize":40,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":459,"x":7,"width":640,"var":"public_label","text":"0x00000","height":93,"fontSize":35,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Image","props":{"y":50,"x":588,"var":"close_button","skin":"comp/close_button.png","name":"close_button"}}]};
+		my_publicUI.uiView={"type":"Dialog","props":{"width":640,"popupCenter":true,"height":1136},"child":[{"type":"Rect","props":{"y":0,"x":0,"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}},{"type":"Text","props":{"y":181,"x":3,"width":640,"text":"Your Public Key","height":93,"fontSize":40,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":459,"x":7,"width":640,"var":"public_label","text":"0x00000","height":93,"fontSize":35,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Image","props":{"y":50,"x":588,"var":"close_button","skin":"comp/close_button.png","name":"close_button"}}]};
 		return my_publicUI;
 	})(Dialog);

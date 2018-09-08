@@ -1,6 +1,7 @@
 
 var PacketCMD = require('../../common/packet_helper');
 var lcc = require('./utils');
+var myDirector = require('./myDirector');
 
 var LoginPage = function(){
     LoginPage.super(this);
@@ -17,9 +18,15 @@ var LoginPage = function(){
 
             var user_key = lcc.genNewUserInfo();
             console.log(user_key)
+            myDirector.save_key(user_key.public,user_key.private);
+
 
             var login_packet = PacketCMD.generate_create_user(user_nickName,user_key.public);
             console.log(login_packet);
+
+            myDirector.getSocketClient().send(login_packet);
+
+
 
         })
     }
