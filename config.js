@@ -9,7 +9,7 @@ var config = {
 		key: path.resolve(root, "../common/cert/214352880350098.key"),
 		cert: path.resolve(root, "../common/cert/214352880350098.pem")
 	},
-	wanxiang_token: "cfa1b767741bf8238c31706673181c16132710e7e1b1d35999c697f057e8092c"
+	wanxiang_token: "<ca0005a1662fa8b662e83098466d5abafd063ab5878c8753835537212852239c>"
 };
 
 if(config["RELEASE"]){

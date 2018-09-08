@@ -24,7 +24,7 @@ wancloud_api.prototype.set = function(raw_data, label, cb){
 		}
 	}
 	*/
-	
+	console.log(config.wanxiang_token);
 	request
 	.post("https://api.wancloud.io/apis/bcs/entry")
 	.set('user-key', config.wanxiang_token)
