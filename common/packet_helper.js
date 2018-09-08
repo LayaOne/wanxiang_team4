@@ -27,7 +27,7 @@ PacketHelper.login_with_token = function(user_token){
  * @param {*} bSuc 成功与否
  * @param {*} user_token 用户token
  */
-PacketHelper.on_logined = function(bSuc, user_token,user_nickname){
+PacketHelper.on_logined = function(bSuc, user_token,user_nickname, reputation){
     var packet = {};
     packet.cmd = 'logined';
     packet.data = {};
@@ -38,7 +38,8 @@ PacketHelper.on_logined = function(bSuc, user_token,user_nickname){
     else{
         packet.data.retcode = 0;
         packet.data.user_token = user_token;
-        packet.data.user_nickname = user_nickname;
+		packet.data.user_nickname = user_nickname;
+		packet.data.reputation = reputation;
     }
 
     return packet;
