@@ -2,6 +2,8 @@ var ViewManager = {};
 
 var MainPage = require('./main_page');
 var LoginPage = require('./login_page');
+var ContractListPage = require('./contract_list');
+
 var SocketClient = require('./socket_client');
 var myDirector = require('./myDirector');
 var Local = require('./local');
@@ -28,14 +30,23 @@ ViewManager.initlize = function(){
 
     Laya.class(MainPage,"MainPage",mainUI);
     Laya.class(LoginPage,"LoginPage",loginUI);
+    Laya.class(ContractListPage,"ContractListPage",contract_listUI);
+    
+    
 
     
     ViewManager.ROOTNODE = new laya.display.Sprite();
     Laya.stage.addChild(ViewManager.ROOTNODE);
 	Laya.loader.load(resArry ,Laya.Handler.create(null,function(){
         
+        
         var mainPage = new MainPage();
         ViewManager.jump_to_view(mainPage);
+        
+        /*
+        var test_page = new ContractListPage();
+        ViewManager.jump_to_view(test_page);
+        */
 
 	}))
 }
@@ -63,6 +74,16 @@ ViewManager.localize_element = function(element){
     }
 }
 
+ViewManager.return_home = function(){
+    var main_page = new MainPage();
+    ViewManager.jump_to_view(main_page);
+}
+
+ViewManager.show_contract_list = function(){
+    var list_page = new ContractListPage();
+    ViewManager.jump_to_view(list_page);
+}
+
 ViewManager.jump_to_view = function(view){
 
     ViewManager.localize_element(view);
@@ -87,5 +108,17 @@ ViewManager.show_public_page = function(public_key){
 
 }
 
+
+ViewManager.show_loading = function(show){
+    if(show){
+        if(ViewManager.loading_dialog == undefined){
+            ViewManager.loading_dialog = new LoadingUI();
+        }
+        ViewManager.loading_dialog.popup();
+    }
+    else{
+        ViewManager.loading_dialog.close();
+    }
+}
 
 module.exports = ViewManager;
