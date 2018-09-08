@@ -129,7 +129,8 @@ PacketHelper.confirm_contract = function(contract_id,self_sign){
  */
 PacketHelper.confirm_result = function(bsuc, contract_id, errormsg){
     var packet = {}
-	packet.cmd = 'contract_confirmed';
+    packet.cmd = 'contract_confirmed';
+    packet.data = {};
 	
 	if(bsuc == true){
 		packet.data.retcode = 0;
@@ -139,10 +140,8 @@ PacketHelper.confirm_result = function(bsuc, contract_id, errormsg){
         packet.data.retcode = 1;
         packet.data.msg = errormsg;
     }
-    
     return packet;
 }
-
 
 /**
  * 完成合同
