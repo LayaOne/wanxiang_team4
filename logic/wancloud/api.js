@@ -73,14 +73,16 @@ wancloud_api.prototype.get = function(raw_data_hash){
 wancloud_api.prototype.set = function(raw_data, label){
 	return new Promise((resolve, reject) => {
 		let hash = randomstring.generate(32);
-
+		
 		this.map[hash] = {
 			"rawData": raw_data,
 			"rawDataHash": hash,
 			"label": label
 		}
 
-		resolve(hash);
+		resolve({
+			"rawDataHash": hash
+		});
 	});	
 }
 
