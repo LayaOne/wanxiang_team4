@@ -12,7 +12,7 @@ function wancloud_api(){
 
 }
 
-wancloud_api.prototype.set = function(raw_data, label, cb){
+wancloud_api.prototype.set = function(raw_data, label){
 	/*
 	https://api.wancloud.io/apis/bcs/entry
 	{
@@ -24,14 +24,24 @@ wancloud_api.prototype.set = function(raw_data, label, cb){
 		}
 	}
 	*/
-	request
-	.post("https://api.wancloud.io/apis/bcs/entry")
-	.set('user-key', config.wanxiang_token)
-	.send({
-		"rawData": raw_data,
-		"label": label
-	})
-	.end(cb);
+	
+	return new Promise((resolve, reject) => {
+		request
+		.post("https://api.wancloud.io/apis/bcs/entry")
+		.set('user-key', config.wanxiang_token)
+		.send({
+			"rawData": raw_data,
+			"label": label
+		})
+		.end(function(err, res){
+			if(err || res.body.code != 200){
+				reject(res.body.status);
+				return;
+			}
+			
+			resolve(res.body);
+		});
+	});	
 }
 
 wancloud_api.prototype.get = function(raw_data_hash){
@@ -51,10 +61,10 @@ wancloud_api.prototype.get = function(raw_data_hash){
 		.get("https://api.wancloud.io/apis/bcs/entry/" + raw_data_hash)
 		.end(function(err, res){
 			if(err || res.body.code != 200){
-				reject(err);
+				reject(res.body.status);
 				return;
 			}
-			
+
 			resolve(res.body);
 		});
 	});

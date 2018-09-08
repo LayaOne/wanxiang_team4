@@ -19,6 +19,7 @@ function ms_human(){
 		nickname: String,
 		token: String,
 		login_ts: Number,
+		wancloud_hash: String,
 		date: { type: Date, default: Date.now }
 	}));
 	
@@ -36,7 +37,8 @@ ms_human.prototype.insert = function(pubkey, value, cb){
 				pubkey: pubkey,
 				nickname: value.nickname,
 				token: value.token,
-				login_ts: value.login_ts
+				login_ts: value.login_ts,
+				wancloud_hash: value.wancloud_hash
 			});
 			
 			doc.save(function(err, product, numAffected){
