@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/tyrande000/wanxiang_team4/issues"
   },
-  "homepage": "https://github.com/tyrande000/wanxiang_team4#readme"
+  "homepage": "https://github.com/tyrande000/wanxiang_team4#readme",
+  "dependencies": {
+    "winston": "^3.1.0"
+  }
 }

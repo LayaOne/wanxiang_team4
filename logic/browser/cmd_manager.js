@@ -3,12 +3,32 @@
  */
 const mlogger = require("../../utils/mlogger");
 const ms_human_model = require("../../db/mongodb/ms_human");
+const ms_contract_model = require("../../db/mongodb/ms_contract");
 const randomstring = require('randomstring');
 const user_mgr = require("../user/user_mgr");
 const contract_mgr = require("../contract/contract_mgr");
 const packet_helper = require("../../common/packet_helper");
 const wancloud_api = require("../wancloud/api");
 const time_op = require("../../utils/time_op");
+
+function CMD_USER_NICKNAME(packet, browser){
+	let token = randomstring.generate(32);
+	let data = packet.data;
+	//user_mgr.add_one(packet.data.user_nickname, packet.data.user_pubkey, token);
+	
+	ms_human_model.insert(data.user_pubkey, {
+		nickname: data.user_nickname,
+		token: token,
+		login_ts: time_op.now()
+	}, function(err, product, numAffected){
+		if(!!err){
+			browser.send_msg(packet_helper.on_logined(false));
+		}else{
+			browser.set_pubkey(data.user_pubkey);
+			browser.send_msg(packet_helper.on_logined(true, token, data.user_nickname));
+		}
+	});
+}
 
 function CMD_LOGIN_WITH_TOKEN(packet, browser){
 	let token = packet.data.user_token;
@@ -32,33 +52,13 @@ function CMD_LOGIN_WITH_TOKEN(packet, browser){
 	});
 }
 
-function CMD_USER_NICKNAME(packet, browser){
-	let token = randomstring.generate(32);
-	let data = packet.data;
-	//user_mgr.add_one(packet.data.user_nickname, packet.data.user_pubkey, token);
-	
-	ms_human_model.insert(data.user_pubkey, {
-		nickname: data.user_nickname,
-		token: token,
-		contracts: [],
-		login_ts: time_op.now()
-	}, function(err, product, numAffected){
-		if(!!err){
-			browser.send_msg(packet_helper.on_logined(false));
-		}else{
-			browser.set_pubkey(data.user_pubkey);
-			browser.send_msg(packet_helper.on_logined(true, token, data.user_nickname));
-		}
-	});
-}
-
 function CMD_CREATE_CONTRACT(packet, browser){
 	let creator_pubkey = browser.get_pubkey();
 	
 	if(!creator_pubkey){
 		return;
 	}
-
+	
 	let data = packet.data;
 	let keys = [creator_pubkey, data.contract_target_userid];
 	
@@ -71,14 +71,33 @@ function CMD_CREATE_CONTRACT(packet, browser){
 		}
 		
 		wancloud_api.set(data.contract_content, {
+			"title": contract_title,
 			"party_a": creator_pubkey,
 			"party_b": data.contract_target_userid,
 			"party_b_agree": false,
-			"title": contract_title,
-			"ts": time_op.now(),
-			"last_update_ts": time_op.now()
+			"party_a_finish": false,
+			"party_b_finish": false,
+			"create_ts": time_op.now(),
+			"agree_ts": -1,
+			"finish_ts": -1
 		}, function(err, res){
-			let body = res.body;
+			if(err || res.body.code != 200){
+				browser.send_msg(packet_helper.create_contract_result(false, res.body.status));
+				return;
+			}
+			
+			let raw_data_hash = res.body.rawDataHash;
+			
+			ms_contract_model.insert(raw_data_hash, {
+				party_a: creator_pubkey,
+				party_a: data.contract_target_userid
+			}, function(err, product, numAffected){
+				if(!!err){
+					browser.send_msg(packet_helper.create_contract_result(false, err.toString()));
+				}else{
+					browser.send_msg(packet_helper.create_contract_result(true));
+				}
+			});
 		});
 		/*
 		contract_mgr.add_one(creator_pubkey,
@@ -90,10 +109,55 @@ function CMD_CREATE_CONTRACT(packet, browser){
 }
 
 function CMD_QUERY_CONTRACT_LIST(packet, browser){
-	var creator_pubkey = browser.get_pubkey();
+	var my_pubkey = browser.get_pubkey();
 	
-	ms_contract_model.find
-	wancloud_api.
+	if(!my_pubkey){
+		return;
+	}
+	
+	ms_contract_model.find_many({$or: [{party_a: my_pubkey}, {party_b: my_pubkey}]}, async function(docs){
+		let ret = [];
+
+		for(let i = 0;i < docs.length;++i){
+			try{
+				ret.push(await wancloud_api.get(docs[i].contract_hash));
+			}catch(err){
+				console.log("CMD_QUERY_CONTRACT_LIST err:", err);
+			}
+		}
+
+		browser.send_msg(packet_helper.return_contract_list(ret));
+	});
+}
+
+function CMD_CONFIRM_CONTRACT(packet, browser){
+	var my_pubkey = browser.get_pubkey();
+	
+	if(!my_pubkey){
+		return;
+	}
+	
+	//verify signature by party_b
+	
+	ms_contract_model.find_one({"contract_hash": packet.data.contract_id}, async function(doc){
+		if(!doc || doc.party_b != my_pubkey){
+			return;
+		}
+		
+		let body = await wancloud_api.get(packet.data.contract_id);
+		
+		body.label.party_b_agree = true;
+		body.label.agree_ts = time_op.now();
+		
+		wancloud_api.set(body.rawData, body.label, function(err, res){
+			if(err || res.body.code != 200){
+				//browser.send_msg(packet_helper.create_contract_result(false, res.body.status));
+				return;
+			}
+			
+			//browser.send_msg(packet_helper.create_contract_result(true));
+		});
+	});
 }
 
 exports.CMDFactory = (function(){
@@ -113,6 +177,9 @@ exports.CMDFactory = (function(){
 					break;
 				case "query_contract_list":
 					CMD_QUERY_CONTRACT_LIST(packet, browser);
+					break;
+				case "confirm_contract": 
+					CMD_CONFIRM_CONTRACT(packet, browser);
 					break;
 				default:
 					return;

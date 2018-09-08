@@ -1,9 +1,6 @@
 /**
  * Module dependencies.
  */
-const url = require('url');
-const queryString = require('query-string');
-const ms_session_model = require('../../db/mongodb/ms_session.js');
 const { CMDFactory } = require('./cmd_manager.js');
 const mlogger = require("../../utils/mlogger");
 
