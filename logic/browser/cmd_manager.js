@@ -91,7 +91,7 @@ function CMD_CREATE_CONTRACT(packet, browser){
 		try{
 			var encrypt_data = await gadgets.encryptAsync(data.contract_content, aes);
 			let body = await wancloud_api.set(encrypt_data, {
-				"title": contract_title,
+				"title": data.contract_title,
 				"party_a": creator_pubkey,
 				"party_b": data.contract_target_userid,
 				"party_b_agree": false,
@@ -101,7 +101,7 @@ function CMD_CREATE_CONTRACT(packet, browser){
 				"agree_ts": -1,
 				"finish_ts": -1
 			});
-
+			
 			ms_contract_model.insert(body.rawDataHash, {
 				party_a: creator_pubkey,
 				party_a: data.contract_target_userid,
@@ -114,7 +114,7 @@ function CMD_CREATE_CONTRACT(packet, browser){
 				}
 			});
 		}catch(err){
-			browser.send_msg(packet_helper.create_contract_result(false, err));
+			browser.send_msg(packet_helper.create_contract_result(false, err.toString()));
 		}
 		/*
 		contract_mgr.add_one(creator_pubkey,

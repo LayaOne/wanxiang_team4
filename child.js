@@ -17,6 +17,9 @@ child.init = function() {
 };
 
 child.send2browser = function(id, packet, close){
+	console.log("-===========");
+	console.log(packet);
+	console.log();
 	process.send({
 		"packet" : JSON.stringify(packet),
 		"opts" : {
