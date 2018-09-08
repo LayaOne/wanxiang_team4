@@ -10,6 +10,7 @@ const mlogger = require("../../utils/mlogger");
 var browser_info = function(session_id, send) {
 	this.session_id = session_id;
 	this.cb_send = send;
+	this.pubkey = null;
 	
 	return {
 		get_session_id : () => {
@@ -17,6 +18,12 @@ var browser_info = function(session_id, send) {
 		},
 		send_msg: (msg) => {
 			this.cb_send(this.session_id, msg);
+		},
+		set_pubkey: (pubkey) => {
+			this.pubkey = pubkey;
+		},
+		get_pubkey: () => {
+			return this.pubkey;
 		},
 		create_aes: () => {
 			return crypto.createCipher("aes-128-cfb", bytes);

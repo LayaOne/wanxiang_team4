@@ -8,7 +8,8 @@ var config = {
 	ssl : {
 		key: path.resolve(root, "../common/cert/214352880350098.key"),
 		cert: path.resolve(root, "../common/cert/214352880350098.pem")
-	}
+	},
+	wanxiang_token: "cfa1b767741bf8238c31706673181c16132710e7e1b1d35999c697f057e8092c"
 };
 
 if(config["RELEASE"]){
