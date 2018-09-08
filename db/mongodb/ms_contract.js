@@ -18,6 +18,7 @@ function ms_contract(){
 		contract_hash: String,
 		party_a: String,
 		party_b: String,
+		aes: String,
 		create_at: { type: Date, default: Date.now }
 	}));
 	
@@ -35,6 +36,7 @@ ms_contract.prototype.insert = function(contract_hash, value, cb){
 				contract_hash: contract_hash,
 				party_a: value.party_a,
 				party_b: value.party_b,
+				aes: value.aes
 			});
 
 			doc.save(function(err, product, numAffected){
