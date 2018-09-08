@@ -122,6 +122,17 @@ PacketHelper.confirm_contract = function(contract_id,self_sign){
 }
 
 
+/**
+ * 确认合约通知
+ * @param {*} contract_id 
+ */
+PacketHelper.confirm_result = function(contract_id){
+    var packet = {}
+    packet.cmd = 'contract_confirmed';
+    packet.data.contract_id = contract_id;
+    return packet;
+}
+
 
 
 

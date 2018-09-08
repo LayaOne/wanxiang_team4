@@ -2,6 +2,79 @@ var CLASS$=Laya.class;
 var STATICATTR$=Laya.static;
 var View=laya.ui.View;
 var Dialog=laya.ui.Dialog;
+var contract_listUI=(function(_super){
+		function contract_listUI(){
+			
+		    this.my_contract_list=null;
+
+			contract_listUI.__super.call(this);
+		}
+
+		CLASS$(contract_listUI,'ui.contract_listUI',_super);
+		var __proto__=contract_listUI.prototype;
+		__proto__.createChildren=function(){
+		    			View.regComponent("Text",laya.display.Text);
+
+			laya.ui.Component.prototype.createChildren.call(this);
+			this.createView(contract_listUI.uiView);
+
+		}
+
+		contract_listUI.uiView={"type":"View","props":{"width":640,"height":1136},"child":[{"type":"Sprite","props":{"y":0,"x":0,"width":640,"height":1136},"child":[{"type":"Rect","props":{"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}}]},{"type":"Text","props":{"y":137,"x":0,"width":640,"var":"my_contract_list","text":"我的合同列表","name":"my_contract_list","height":57,"fontSize":40,"color":"#ffffff","align":"center"}}]};
+		return contract_listUI;
+	})(View);
+var createUI=(function(_super){
+		function createUI(){
+			
+		    this.create_title=null;
+		    this.target_pubkey_label=null;
+		    this.target_pubkey_input=null;
+		    this.contract_title_label=null;
+		    this.contract_title_input=null;
+		    this.contract_content_label=null;
+		    this.contract_content_input=null;
+		    this.do_create_button=null;
+		    this.create_wrong_tip=null;
+
+			createUI.__super.call(this);
+		}
+
+		CLASS$(createUI,'ui.createUI',_super);
+		var __proto__=createUI.prototype;
+		__proto__.createChildren=function(){
+		    			View.regComponent("Text",laya.display.Text);
+
+			laya.ui.Component.prototype.createChildren.call(this);
+			this.createView(createUI.uiView);
+
+		}
+
+		createUI.uiView={"type":"View","props":{"width":640,"height":1136},"child":[{"type":"Rect","props":{"y":0,"x":0,"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}},{"type":"Text","props":{"y":69,"x":0,"width":640,"var":"create_title","text":"创建您的合同","name":"create_title","height":57,"fontSize":35,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":164,"x":-133,"width":511,"var":"target_pubkey_label","text":"签署对象","name":"target_pubkey_label","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"TextInput","props":{"y":223,"x":61,"width":542,"var":"target_pubkey_input","skin":"comp/button_skin.png","sizeGrid":"12,13,12,11","prompt":"target public key","name":"target_pubkey_input","height":91,"fontSize":30,"font":"Microsoft YaHei","color":"#ffffff"}},{"type":"Text","props":{"y":371,"x":-134,"width":511,"var":"contract_title_label","text":"合同标题","name":"contract_title_label","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"TextInput","props":{"y":442,"x":60,"width":542,"var":"contract_title_input","skin":"comp/button_skin.png","sizeGrid":"12,13,12,11","prompt":"contract title","name":"contract_title_input","height":91,"fontSize":30,"font":"Microsoft YaHei","color":"#ffffff"}},{"type":"Text","props":{"y":576,"x":-138,"width":511,"var":"contract_content_label","text":"合同详情","name":"contract_content_label","height":57,"fontSize":30,"color":"#ffffff","align":"center"}},{"type":"TextArea","props":{"y":632,"x":58,"width":533,"var":"contract_content_input","skin":"comp/button_skin.png","sizeGrid":"28,23,19,12","prompt":"Write anything you wanna make deal","overflow":"scroll","name":"contract_content_input","height":227,"fontSize":30,"color":"#ffffff","align":"left"}},{"type":"Button","props":{"y":993,"x":129,"width":391,"var":"do_create_button","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"do_create_button","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"创建合同","height":99}},{"type":"Text","props":{"y":891,"x":7,"width":640,"var":"create_wrong_tip","name":"create_wrong_tip","height":49,"fontSize":35,"font":"Microsoft YaHei","color":"#f33733","align":"center"}}]};
+		return createUI;
+	})(View);
+var create_resultUI=(function(_super){
+		function create_resultUI(){
+			
+		    this.suc_logo=null;
+		    this.create_finish_status=null;
+		    this.jump_my_contract_list=null;
+
+			create_resultUI.__super.call(this);
+		}
+
+		CLASS$(create_resultUI,'ui.create_resultUI',_super);
+		var __proto__=create_resultUI.prototype;
+		__proto__.createChildren=function(){
+		    			View.regComponent("Text",laya.display.Text);
+
+			laya.ui.Component.prototype.createChildren.call(this);
+			this.createView(create_resultUI.uiView);
+
+		}
+
+		create_resultUI.uiView={"type":"View","props":{"width":640,"height":1136},"child":[{"type":"Sprite","props":{"y":0,"x":0,"width":640,"height":1136},"child":[{"type":"Rect","props":{"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}}]},{"type":"Image","props":{"visible":false,"var":"suc_logo","skin":"comp/created.png","name":"suc_logo","centerY":-232,"centerX":0}},{"type":"Text","props":{"y":523,"x":232,"width":188,"var":"create_finish_status","text":"创建中","name":"create_finish_status","height":75,"fontSize":40,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":758,"x":135,"width":391,"visible":false,"var":"jump_my_contract_list","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"my_contract_list","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"查看我的合同","height":99}}]};
+		return create_resultUI;
+	})(View);
 var loginUI=(function(_super){
 		function loginUI(){
 			
@@ -50,7 +123,7 @@ var mainUI=(function(_super){
 
 		}
 
-		mainUI.uiView={"type":"View","props":{"width":640,"height":1136},"child":[{"type":"Sprite","props":{"y":0,"x":0,"width":640,"height":1136},"child":[{"type":"Rect","props":{"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}}]},{"type":"Image","props":{"y":139,"width":272,"skin":"comp/wanxiang_logo.png","height":82,"centerX":-128}},{"type":"Text","props":{"y":158,"x":391,"width":243,"var":"wanxiang_city_logotext","text":"万向创新聚能城","name":"wanxiang_city_logotext","height":63,"fontSize":28,"font":"Microsoft YaHei","color":"#ffffff"}},{"type":"Text","props":{"y":362,"x":4,"width":640,"text":"商业合同生成器","height":75,"fontSize":50,"color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":611,"x":133,"width":391,"var":"create_contract_button","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"create_contract_button","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"创建合同","height":99}},{"type":"Text","props":{"y":461,"x":5,"width":640,"text":"Business Contract Generator","height":75,"fontSize":40,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":52,"x":500,"width":103,"var":"change_langurage","text":"ENG","height":56,"fontSize":30,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":741,"x":135,"width":391,"var":"my_contract_list","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"my_contract_list","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"查看我的合同","height":99}},{"type":"Button","props":{"y":871,"x":133,"width":391,"var":"check_my_public","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"check_my_public","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"查看我的公钥","height":99}}]};
+		mainUI.uiView={"type":"View","props":{"width":640,"height":1136},"child":[{"type":"Sprite","props":{"y":0,"x":-3,"width":640,"height":1136},"child":[{"type":"Rect","props":{"width":640,"lineWidth":1,"height":1136,"fillColor":"#2b2b2b"}}]},{"type":"Image","props":{"y":139,"width":272,"skin":"comp/wanxiang_logo.png","height":82,"centerX":-128}},{"type":"Text","props":{"y":158,"x":391,"width":243,"var":"wanxiang_city_logotext","text":"万向创新聚能城","name":"wanxiang_city_logotext","height":63,"fontSize":28,"font":"Microsoft YaHei","color":"#ffffff"}},{"type":"Text","props":{"y":362,"x":4,"width":640,"text":"商业合同生成器","height":75,"fontSize":50,"color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":611,"x":133,"width":391,"var":"create_contract_button","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"create_contract_button","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"创建合同","height":99}},{"type":"Text","props":{"y":461,"x":5,"width":640,"text":"Business Contract Generator","height":75,"fontSize":40,"color":"#ffffff","align":"center"}},{"type":"Text","props":{"y":52,"x":500,"width":103,"var":"change_langurage","text":"ENG","height":56,"fontSize":30,"font":"Microsoft YaHei","color":"#ffffff","align":"center"}},{"type":"Button","props":{"y":741,"x":135,"width":391,"var":"my_contract_list","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"my_contract_list","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"查看我的合同","height":99}},{"type":"Button","props":{"y":871,"x":133,"width":391,"var":"check_my_public","stateNum":1,"skin":"comp/button_skin.png","sizeGrid":"10,10,8,7","name":"check_my_public","labelStroke":0,"labelSize":40,"labelFont":"Microsoft YaHei","labelColors":"#FFFFFF","labelBold":false,"labelAlign":"center","label":"查看我的公钥","height":99}}]};
 		return mainUI;
 	})(View);
 var my_publicUI=(function(_super){

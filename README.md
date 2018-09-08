@@ -32,10 +32,17 @@
 > In the case of the existence of the above two elements, a commercial contract system based on blockchain technology came into being. Due to the empowerment of the blockchain, in this new smart city, there will be no more con man , fake contracts , commercial fraud and so on. At the same time, the cost of doing evil for every citizen in tearing up a contract will increase indefinitely.
 
 
+### 工作流程图
+
+> work process
+
+
+
+
 
 ### 我们使用的技术栈
 
->Our TechStack
+>TechStack
 
 Node.Js - Backend
 
@@ -45,12 +52,19 @@ wancloud.io - BlockChain Stroage
 
 Ellipse algorithm
 
+### 美术资源
+
+> Art Resouce
+
+iconfont.cn
+
 
 
 ### 项目截图
 
-![](http://palu6iv0v.bkt.clouddn.com/UC20180908_030916.png)
+![](http://palu6iv0v.bkt.clouddn.com/UC20180908_172547.png)
 
+![](http://palu6iv0v.bkt.clouddn.com/UC20180908_182542.png)
 
 
 
