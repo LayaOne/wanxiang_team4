@@ -27,4 +27,8 @@ gadgets.decryptAsync = function(encrypt_data, password) {
     });
 }
 
+gadgets.create_uuid = function(n){
+	return crypto.createHash('md5').update(UUID.v1()).digest('hex').substr(0, n);
+}
+
 module.exports = gadgets;
