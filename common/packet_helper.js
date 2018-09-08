@@ -27,7 +27,7 @@ PacketHelper.login_with_token = function(user_token){
  * @param {*} bSuc 成功与否
  * @param {*} user_token 用户token
  */
-PacketHelper.on_logined = function(bSuc, user_token){
+PacketHelper.on_logined = function(bSuc, user_token,user_nickname){
     var packet = {};
     packet.cmd = 'logined';
     packet.data = {};
@@ -38,6 +38,7 @@ PacketHelper.on_logined = function(bSuc, user_token){
     else{
         packet.data.retcode = 0;
         packet.data.user_token = user_token;
+        packet.data.user_nickname = user_nickname;
     }
 
     return packet;
@@ -71,6 +72,43 @@ PacketHelper.query_contract_list = function(){
     return packet;
 
 }
+
+/**
+ * 创建合同结果
+ * @param {*} bsuc 
+ * @param {*} errormsg 
+ */
+PacketHelper.create_contract_result = function(bsuc,errormsg){
+    var packet = {};1
+    packet.cmd = 'create_contract_result';
+    packet.data = {};
+    if(bsuc == true){
+        packet.data.retcode = 0;
+    }
+    else{
+        packet.data.retcode = 1;
+        packet.data.msg = errormsg;
+    }
+
+    return packet;
+}
+
+
+/**
+ * 确认合约
+ * @param {*} contract_id 合同ID
+ * @param {*} self_sign 自己的公钥签名
+ */
+PacketHelper.confirm_contract = function(contract_id,self_sign){
+    var packet = {};
+    packet.cmd = 'confirm_contract';
+    packet.data = {};
+    packet.data.contract_id = contract_id;
+    packet.data.self_sign = self_sign;
+
+    return packet;
+}
+
 
 
 
