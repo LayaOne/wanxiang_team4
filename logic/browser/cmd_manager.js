@@ -43,6 +43,11 @@ async function CMD_USER_NICKNAME(packet, browser){
 	}
 }
 
+/**
+ * Login with token
+ * @param {*} packet 
+ * @param {*} browser 
+ */
 function CMD_LOGIN_WITH_TOKEN(packet, browser){
 	let token = packet.data.user_token;
 
@@ -68,8 +73,8 @@ function CMD_LOGIN_WITH_TOKEN(packet, browser){
 
 /**
  * 创建合同
- * @param {*} packet 
- * @param {*} browser 
+ * @param {*} packet
+ * @param {*} browser
  */
 function CMD_CREATE_CONTRACT(packet, browser){
 	let creator_pubkey = browser.get_pubkey();
@@ -141,12 +146,13 @@ function CMD_QUERY_CONTRACT_LIST(packet, browser){
 	
 	ms_contract_model.find_many({$or: [{party_a: my_pubkey}, {party_b: my_pubkey}]}, async function(docs){
 		let ret = [];
-
+		
 		for(let i = 0;i < docs.length;++i){
 			try{
 				let body = await wancloud_api.get(docs[i].contract_hash);
-
-				body.label.data = await gadgets.decryptAsync(body.label.encrypted_data, docs[i].aes);
+				let buffer = Buffer.from(body.label.encrypted_data, "hex");
+				
+				body.label.data = await gadgets.decryptAsync(buffer, docs[i].aes);
 
 				ret.push(body);
 			}catch(err){
