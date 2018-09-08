@@ -74,6 +74,18 @@ PacketHelper.query_contract_list = function(){
 }
 
 /**
+ * 返回合约列表
+ * @param {*} arry 
+ */
+PacketHelper.return_contract_list = function(arry){
+    var packet = {};
+    packet.cmd = 'contract_list_result';
+    packet.data = {};
+    packet.data.contract_list = arry;
+    return packet;
+}
+
+/**
  * 创建合同结果
  * @param {*} bsuc 
  * @param {*} errormsg 
@@ -108,6 +120,7 @@ PacketHelper.confirm_contract = function(contract_id,self_sign){
 
     return packet;
 }
+
 
 
 
