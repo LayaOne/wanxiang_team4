@@ -24,7 +24,6 @@ wancloud_api.prototype.set = function(raw_data, label, cb){
 		}
 	}
 	*/
-	console.log(config.wanxiang_token);
 	request
 	.post("https://api.wancloud.io/apis/bcs/entry")
 	.set('user-key', config.wanxiang_token)
@@ -32,5 +31,22 @@ wancloud_api.prototype.set = function(raw_data, label, cb){
 		"rawData": raw_data,
 		"label": label
 	})
+	.end(cb);
+}
+
+wancloud_api.prototype.get = function(raw_data_hash, cb){
+	/*
+	{
+		"rawData": "万向区块链",
+		"rawDataHash": "b0069eff1ac6795c58bf1dfbcb0de0ff",
+		"status": 1,
+		"label": {
+			"type": "bl",
+			"address": "上海"
+		}
+	}
+	*/
+	request
+	.get("https://api.wancloud.io/apis/bcs/entry/" + raw_data_hash)
 	.end(cb);
 }
