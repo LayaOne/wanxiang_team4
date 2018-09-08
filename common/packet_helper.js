@@ -127,13 +127,15 @@ PacketHelper.confirm_contract = function(contract_id,self_sign){
  * 确认合约通知
  * @param {*} contract_id 
  */
-PacketHelper.confirm_result = function(bsuc, contract_id, errormsg){
+PacketHelper.confirm_result = function(bsuc, contract_id, new_contract_id, errormsg){
     var packet = {}
 	packet.cmd = 'contract_confirmed';
+	packet.data = {};
 	
 	if(bsuc == true){
 		packet.data.retcode = 0;
 		packet.data.contract_id = contract_id;
+		packet.data.new_contract_id = new_contract_id;
     }
     else{
         packet.data.retcode = 1;
