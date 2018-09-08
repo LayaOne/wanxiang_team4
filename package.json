@@ -1,0 +1,26 @@
+{
+  "name": "wanxiang_team4",
+  "version": "1.0.0",
+  "description": ">  WanXiang Innova City 's Business Contract Generator",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tyrande000/wanxiang_team4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tyrande000/wanxiang_team4/issues"
+  },
+  "homepage": "https://github.com/tyrande000/wanxiang_team4#readme",
+  "dependencies": {
+    "superagent": "^3.8.3"
+  }
+}
