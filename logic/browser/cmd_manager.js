@@ -59,7 +59,7 @@ function CMD_LOGIN_WITH_TOKEN(packet, browser){
 			if(!!err){
 				browser.send_msg(packet_helper.on_logined(false));
 			}else{
-				browser.set_pubkey(new_token);
+				browser.set_pubkey(doc["pubkey"]);
 				browser.send_msg(packet_helper.on_logined(true, new_token, doc["nickname"], body.label.reputation));
 			}
 		});
