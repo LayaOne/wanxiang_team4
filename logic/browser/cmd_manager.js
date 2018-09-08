@@ -125,11 +125,16 @@ function CMD_QUERY_CONTRACT_LIST(packet, browser){
 				console.log("CMD_QUERY_CONTRACT_LIST err:", err);
 			}
 		}
-
+		
 		browser.send_msg(packet_helper.return_contract_list(ret));
 	});
 }
 
+/**
+ * 乙方确认合同
+ * @param {*} packet 
+ * @param {*} browser 
+ */
 function CMD_CONFIRM_CONTRACT(packet, browser){
 	var my_pubkey = browser.get_pubkey();
 	
@@ -151,12 +156,67 @@ function CMD_CONFIRM_CONTRACT(packet, browser){
 		
 		wancloud_api.set(body.rawData, body.label, function(err, res){
 			if(err || res.body.code != 200){
-				//browser.send_msg(packet_helper.create_contract_result(false, res.body.status));
+				browser.send_msg(packet_helper.confirm_result(false, null, res.body.status));
 				return;
 			}
 			
-			//browser.send_msg(packet_helper.create_contract_result(true));
+			browser.send_msg(packet_helper.confirm_result(true, packet.data.contract_id));
 		});
+	});
+}
+
+/**
+ * 双方完成合同
+ * @param {*} packet
+ * @param {*} browser
+ */
+function CMD_FINISH_CONTRACT(packet, browser){
+	var my_pubkey = browser.get_pubkey();
+	
+	if(!my_pubkey){
+		return;
+	}
+	
+	//verify signature
+
+	ms_contract_model.find_one({"contract_hash": packet.data.contract_id}, async function(doc){
+		if(!doc || doc.party_a != my_pubkey || doc.party_b != my_pubkey){
+			return;
+		}
+
+		try{
+			let body = await wancloud_api.get(packet.data.contract_id);
+		
+			if(!body.label.party_b_agree){
+				return;
+			}
+			
+			switch(my_pubkey){
+				case body.label.party_a:
+					body.label.party_a_finish = true;
+					break;
+				case body.label.party_b:
+					body.label.party_b_finish = true;
+					break;
+				default:
+					return;
+			}
+
+			if(body.label.party_a_finish && body.label.party_b_finish){
+				body.label.finish_ts = time_op.now();
+			}
+
+			wancloud_api.set(body.rawData, body.label, function(err, res){
+				if(err || res.body.code != 200){
+					browser.send_msg(packet_helper.return_finish_contract(false, null, null, res.body.status));
+					return;
+				}
+				
+				browser.send_msg(packet_helper.return_finish_contract(true, packet.data.contract_id, body.label));
+			});
+		}catch(err){
+			browser.send_msg(packet_helper.return_finish_contract(false, null, null, err.toString()));
+		}
 	});
 }
 
@@ -180,6 +240,9 @@ exports.CMDFactory = (function(){
 					break;
 				case "confirm_contract": 
 					CMD_CONFIRM_CONTRACT(packet, browser);
+					break;
+				case "finish_contract":
+					CMD_FINISH_CONTRACT(packet, browser);
 					break;
 				default:
 					return;
