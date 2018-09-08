@@ -61,18 +61,24 @@ var MyContract = function(){
         height = 100;
         for(var i=0; i< arry.length; ++i){
             var single_test_item = new laya.display.Sprite();
-            single_test_item.graphics.drawRect(x,y+(120*i),width,height,'#2b2b2b','#ffffff',1);
-            
+            single_test_item.width = width;
+            single_test_item.height = height;
+            single_test_item.graphics.drawRect(x,y,width,height,'#2b2b2b','#ffffff',1);
+            single_test_item.x = x;
+            single_test_item.y = (120*i);
+
+
 
             var single_contract = arry[i];
-            single_test_item.contract_id = single_contract.contract_id;
-            var contract_title = single_contract.title;
+            console.log('单个合约信息',single_contract);
+            single_test_item.contract_id = single_contract.rawDataHash;
+            var contract_title = single_contract.label.title;
             var single_title_label = new Text();
             single_title_label.text = contract_title;
             single_title_label.fontSize = 20;
             single_title_label.color = '#FFFFFF';
             single_title_label.x = 20;
-            single_title_label.y = 20+(120*i);
+            single_title_label.y = 20;
 
             single_test_item.addChild(single_title_label);
             this.contract_container.addChild(single_test_item);
@@ -102,13 +108,11 @@ var MyContract = function(){
 
     }
 
-
     function on_click_single_contract(){
         var contract_id = this.contract_id;
         console.log('单个合同被点击',contract_id);
     }
-
-
+    
     this.initlize();
 
     

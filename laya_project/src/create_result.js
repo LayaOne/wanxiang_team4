@@ -12,7 +12,7 @@ var CreateResultPage = function(){
     var ViewManager = require('./viewManager');
     CreateResultPage.prototype.initlize = function(){
         
-        SocketClient.regist_callback('create_contract_result',that,that.recv_create_result);
+        SocketClient.regist_callback('create_contract_result',that.recv_create_result);
     }
 
     CreateResultPage.prototype.recv_create_result = function(data){
