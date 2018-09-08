@@ -19,11 +19,14 @@ myDirector.get_pubkey = function(){
 
 myDirector.save_token = function(token){
     localStorage.setItem('token',token);
+    myDirector.islogin = true;
 }
 
 myDirector.get_token = function(){
     return localStorage.getItem('token');
 }
+
+
 
 
 

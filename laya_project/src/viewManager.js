@@ -4,6 +4,7 @@ var MainPage = require('./main_page');
 var LoginPage = require('./login_page');
 var ContractListPage = require('./contract_list');
 var CreatePage = require('./create_page');
+var CreateResultPage = require('./create_result');
 
 var SocketClient = require('./socket_client');
 var myDirector = require('./myDirector');
@@ -25,37 +26,43 @@ ViewManager.set_langurage = function(lan){
     ViewManager.localize_element(ViewManager.current_view);
 }
 
+ViewManager.show_create_result = function(){
+    var create_result_page = new CreateResultPage();
+    ViewManager.jump_to_view(create_result_page);
+}
+
 ViewManager.initlize = function(){
-
-    var socket_instance = new SocketClient("ws://www.ncsip.cn:443",function(){
-        
-    });
-    myDirector.setSocketClient(socket_instance);
-
-
 
     Laya.class(MainPage,"MainPage",mainUI);
     Laya.class(LoginPage,"LoginPage",loginUI);
     Laya.class(ContractListPage,"ContractListPage",contract_listUI);
     Laya.class(CreatePage,"CreatePage",createUI);
-    
+    Laya.class(CreateResultPage,"CreateResultPage",create_resultUI);
     
 
-    
-    ViewManager.ROOTNODE = new laya.display.Sprite();
-    Laya.stage.addChild(ViewManager.ROOTNODE);
-	Laya.loader.load(resArry ,Laya.Handler.create(null,function(){
-        
-        
-        var mainPage = new MainPage();
-        ViewManager.jump_to_view(mainPage);
-        
-        /*
-        var test_page = new ContractListPage();
-        ViewManager.jump_to_view(test_page);
-        */
+    var socket_instance = new SocketClient("ws://www.ncsip.cn:443",function(){
 
-	}))
+        myDirector.setSocketClient(socket_instance);
+
+
+        
+        ViewManager.ROOTNODE = new laya.display.Sprite();
+        Laya.stage.addChild(ViewManager.ROOTNODE);
+        Laya.loader.load(resArry ,Laya.Handler.create(null,function(){
+            
+            
+            var mainPage = new MainPage();
+            ViewManager.jump_to_view(mainPage);
+            
+            /*
+            var test_page = new ContractListPage();
+            ViewManager.jump_to_view(test_page);
+            */
+    
+        }))
+        
+    });
+   
 }
 
 ViewManager.show_login_view = function(){

@@ -1,6 +1,7 @@
 
 var myDirect = require('./myDirector');
 var PacketCMD = require('../../common/packet_helper');
+var lcc = require('./utils');
 
 var MainPage = function(){
     MainPage.super(this);
@@ -16,8 +17,7 @@ var MainPage = function(){
         if(!self_pub){
             var user_key = lcc.genNewUserInfo();
             console.log(user_key)
-            myDirector.save_key(user_key.public,user_key.private);
-
+            myDirect.save_key(user_key.public,user_key.private);
             this.my_contract_list.visible = false;
         }
 
@@ -27,11 +27,17 @@ var MainPage = function(){
             this.my_contract_list.visible = false;
         }
         else{
-
-            var packet = PacketCMD.login_with_token;
+            if(!myDirect.islogin){
+                var packet = PacketCMD.login_with_token(self_token);
+                SocketClient.send(packet);
+            }
         }
 
-
+        SocketClient.regist_callback('logined',function(data){
+            if(data.retcode == 0){
+                myDirect.save_token(data.user_token) ;
+            }
+        })
 
         
         //open public page

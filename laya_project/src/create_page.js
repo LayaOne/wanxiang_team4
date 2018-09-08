@@ -6,10 +6,18 @@ var CreatePage = function(){
     CreatePage.super(this);
     var that = this;
     var SocketClient = myDirector.getSocketClient();
+    var viewManager = require('./viewManager')
     CreatePage.prototype.initlize = function(){
+
+
+        this.return_home.on('click',null,function(){
+            viewManager.return_home();
+        })
 
         //创建合同
         this.do_create_button.on('click',null,function(){
+
+          
 
             var target_public_key = that.target_pubkey_input.text;
 
@@ -19,19 +27,24 @@ var CreatePage = function(){
 
             if(!target_public_key || !contract_title || !contract_content){
                 that.set_wrong_tip('please complete fill the blank');
+                return;
             }
+
+            viewManager.show_create_result();
 
             //todo 校验pubkey
 
             var create_packet = PacketCMD.generate_create_contract(target_public_key,contract_title,contract_content);
             SocketClient.send(create_packet);
 
+           
+
         })
     }
 
 
     CreatePage.prototype.set_wrong_tip = function(str){
-        that.create_wrong_tip.text(str);
+        that.create_wrong_tip.text = str;
     }
 
     this.initlize();

@@ -12,12 +12,14 @@ var MyContract = function(){
     MyContract.prototype.initlize = function(){
 
         if(viewManager.current_langurage == 'CHN'){
-            that.my_contract_list_label = '请求列表中'
+            that.my_contract_list_label.text = '请求列表中'
         }
         else{
-            that.my_contract_list_label = 'Requesting';
+            that.my_contract_list_label.text = 'Requesting';
         }        
 
+
+        /*
         var dummy_data = [];
         for(var i=0; i < 5; i++){
             var single_dummy = {};
@@ -25,19 +27,27 @@ var MyContract = function(){
             single_dummy.party_b_agree = false;
             dummy_data.push(single_dummy);
         }
+        */
 
-        that.render_contract_list(dummy_data)
 
+        //that.render_contract_list(dummy_data)
+
+
+
+
+        SocketClient.regist_callback('contract_list_result',that.recv_list);
+
+        var packet = PacketCMD.query_contract_list();
+        SocketClient.send(packet);
+
+        console.log('开始请求合同列表')
 
         that.return_home_button.on('click',null,function(){
             viewManager.return_home();
         })
 
 
-        //SocketClient.regist_callback('contract_list_result',that.recv_list);
-
-        //var packet = PacketCMD.query_contract_list();
-        //SocketClient.send(packet);
+      
 
         
         
@@ -55,6 +65,7 @@ var MyContract = function(){
             
 
             var single_contract = arry[i];
+            single_test_item.contract_id = single_contract.contract_id;
             var contract_title = single_contract.title;
             var single_title_label = new Text();
             single_title_label.text = contract_title;
@@ -66,10 +77,9 @@ var MyContract = function(){
             single_test_item.addChild(single_title_label);
             this.contract_container.addChild(single_test_item);
 
+            single_test_item.on('click',null,on_click_single_contract);
 
 
-            
-            
 
         }
         
@@ -77,10 +87,25 @@ var MyContract = function(){
 
     }
 
+
+
     MyContract.prototype.recv_list = function(data){
+
+        if(viewManager.current_langurage == 'CHN'){
+            that.my_contract_list_label.text = '列表请求完成'
+        }
+        else{
+            that.my_contract_list_label.text = 'Contract List';
+        }      
         var contract_list = data.contract_list;
+        that.render_contract_list(contract_list);
+
+    }
 
 
+    function on_click_single_contract(){
+        var contract_id = this.contract_id;
+        console.log('单个合同被点击',contract_id);
     }
 
 
