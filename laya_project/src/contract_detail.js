@@ -5,8 +5,14 @@ var ContractDetailPage = function(contract_id){
     ContractDetailPage.super(this);
     var that = this;
     this.contract_id = contract_id;
+    var viewManager = require('./viewManager');
 
     ContractDetailPage.prototype.initlize = function(){
+
+        var SocketClient = myDirector.getSocketClient();
+        SocketClient.regist_callback('contract_confirmed',function(data){
+            viewManager.return_home();
+        })
 
         var single_contract_info = myDirector.get_single_contract(this.contract_id);
         console.log('单个Detail',single_contract_info);
@@ -28,8 +34,19 @@ var ContractDetailPage = function(contract_id){
             }
             else{
                 console.log('该合约已经签署',single_contract_info.label.party_b_agree);
+                if(viewManager.current_langurage == 'ENG'){
+                    this.contract_title.text += '（Signed）'
+                }
+                else{
+                    this.contract_title.text += '（已签署）'
+                }
+                
             }
         }
+
+        this.return_home_btn.on('click',null,function(){
+            viewManager.return_home();
+        })
 
         this.confirm_contract.on('click',null,function(){
             var packet = PacketCMD.confirm_contract(that.contract_id);

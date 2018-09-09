@@ -13,15 +13,19 @@ var CreateResultPage = function(){
     CreateResultPage.prototype.initlize = function(){
         
         SocketClient.regist_callback('create_contract_result',that.recv_create_result);
+
+        this.jump_my_contract_list.on('click',null,function(){
+            ViewManager.return_home();
+        })
     }
 
     CreateResultPage.prototype.recv_create_result = function(data){
         if(data.retcode == 0){
             if(ViewManager.current_langurage =='CHN'){
-                that.create_finish_status = '创建成功'
+                that.create_finish_status.text = '创建成功'
             }
             else{
-                that.create_finish_status = 'Created Contract';
+                that.create_finish_status.text = 'Created Contract';
             }
             
             that.suc_logo.visible = true;

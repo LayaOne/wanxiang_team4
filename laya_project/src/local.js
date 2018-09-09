@@ -9,7 +9,9 @@ Local.ENG = {
     input_tips:{type:'label',text:'Please input your citizen info'},
     your_name:{type:'label',text:'Your Name'},
     do_login_butotn:{type:'button',text:'Next'},
-    jump_my_contract_list:{type:'button',text:'Home'}
+    jump_my_contract_list:{type:'button',text:'Home'},
+    create_title:{type:'label',text:'Create Contract'},
+    do_create_button:{type:'button',text:'I Promise'}
 }
 
 
@@ -21,7 +23,9 @@ Local.CHN = {
     welcome_cityzen:{type:'label',text:'欢迎，万向城公民'},
     input_tips:{type:'label',text:'请输入您的公民信息'},
     your_name:{type:'label',text:'您的尊姓大名'},
-    do_login_butotn:{type:'button',text:'继续'}
+    do_login_butotn:{type:'button',text:'继续'},
+    create_title:{type:'label',text:'创建合同'},
+    do_create_button:{type:'button',text:'生成契约'}
 
 }
 

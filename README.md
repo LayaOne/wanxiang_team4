@@ -40,6 +40,18 @@
 > Commercial contracts are broadly defined, and we want to ensure that there is enough freedom -- from corporate mergers and acquisitions to small individuals, you can use this commercial contract generation tool to wind up and protect a commercial contract.
 
 
+### 商业信用点
+
+> Citizen Credit Value
+
+在万向城中，每一个公民都有一个商业信用点，每完成一个商业合同都会得到一个增长。
+
+> In Wanxiang City, every citizen has a commercial credit, and every time a commercial contract is completed, there will be an increase
+
+> The credit value also stroage in BlockChain
+
+
+
 ### 工作流程概述
 
 > Work process
@@ -99,7 +111,8 @@ iconfont.cn
 ![](http://palu6iv0v.bkt.clouddn.com/UC20180908_182542.png)
 
 
+### Demo QrCode
 
-### 商业信用点
+![](http://palu6iv0v.bkt.clouddn.com/UC20180909_102921.png)
 
-在万向城中，每一个公民都有一个商业信用点，每完成一个商业合同都会得到一个增长
+
